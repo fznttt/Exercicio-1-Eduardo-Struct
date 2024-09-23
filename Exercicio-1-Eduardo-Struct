@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_NOME 30
+#define MAX_TELEFONE 15
+
+void limpar_entrada(char *str) {
+    int i = 0, j = 0;
+    while (str[i] != '\0') {
+        if (str[i] >= '0' && str[i] <= '9') {
+            str[j++] = str[i];
+        }
+        i++;
+    }
+    str[j] = '\0';
+}
+
+int main() {
+    struct agenda {
+        char nome[MAX_NOME];
+        int idade;
+        char telefone[MAX_TELEFONE];
+    };
+
+    struct agenda contato;
+
+    printf("Digite o nome: ");
+    fgets(contato.nome, MAX_NOME, stdin);
+    contato.nome[strcspn(contato.nome, "\n")] = '\0';
+
+    printf("Digite a idade: ");
+    scanf("%d", &contato.idade);
+    while (getchar() != '\n'); // Limpa o buffer do teclado
+
+    printf("Digite o telefone (somente números): ");
+    fgets(contato.telefone, MAX_TELEFONE, stdin);
+    limpar_entrada(contato.telefone);
+
+    // Verifica se o tamanho do telefone é válido
+    if (strlen(contato.telefone) < 8 || strlen(contato.telefone) > 15) {
+        printf("Número de telefone inválido!\n");
+        return 1;
+    }
+
+    printf("\nDados do contato:\n");
+    printf("Nome: %s\n", contato.nome);
+    printf("Idade: %d\n", contato.idade);
+    printf("Telefone: %s\n", contato.telefone);
+
+    return 0;
+}
